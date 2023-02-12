@@ -18,6 +18,8 @@ import com.kamilkulka.companyanalyzer.component.CustomerItemCard
 @Composable
 fun ClientsScreen(viewModel: ClientsViewModel = hiltViewModel()) {
     var isExpandedEarliestCustomer by remember { mutableStateOf(true) }
+    var isExpandedLatestCustomer by remember { mutableStateOf(true) }
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Column {
             Text(
@@ -29,6 +31,19 @@ fun ClientsScreen(viewModel: ClientsViewModel = hiltViewModel()) {
             if (isExpandedEarliestCustomer) {
                 LazyColumn {
                     items(items = viewModel.getEarliestCustomer()) { customerItem ->
+                        CustomerItemCard(customerItem)
+                    }
+                }
+            }
+            Text(
+                text = stringResource(id = R.string.latest_check_in_customer),
+                style = MaterialTheme.typography.h5,
+                modifier = Modifier.clickable {
+                    isExpandedLatestCustomer = !isExpandedLatestCustomer
+                })
+            if (isExpandedLatestCustomer) {
+                LazyColumn {
+                    items(items = viewModel.getLatestCustomer()) { customerItem ->
                         CustomerItemCard(customerItem)
                     }
                 }

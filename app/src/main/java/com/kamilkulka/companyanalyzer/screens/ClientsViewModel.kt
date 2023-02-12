@@ -35,13 +35,13 @@ class ClientsViewModel @Inject constructor(
         }
     }
 
-    fun getEarliestCustomer():List<CustomerItem>{
+    fun getEarliestCustomer(): List<CustomerItem> {
 
         var earliestDate: LocalDate? = null
         repositoryData.value.data?.let {
-            for (customerItem in it){
+            for (customerItem in it) {
                 customerItem.lastCheckInDate?.let { checkInDate ->
-                    if (earliestDate == null || checkInDate<earliestDate){
+                    if (earliestDate == null || checkInDate < earliestDate) {
                         earliestDate = checkInDate
                     }
                 }
@@ -52,6 +52,26 @@ class ClientsViewModel @Inject constructor(
 
         return repositoryData.value.data?.let { it ->
             it.filter { customerItem -> customerItem.lastCheckInDate == earliestDate }
+        } ?: emptyList()
+    }
+
+    fun getLatestCustomer(): List<CustomerItem> {
+
+        var latestDate: LocalDate? = null
+        repositoryData.value.data?.let {
+            for (customerItem in it) {
+                customerItem.lastCheckInDate?.let { checkInDate ->
+                    if (latestDate == null || checkInDate > latestDate) {
+                        latestDate = checkInDate
+                    }
+                }
+            }
+        } ?: return emptyList()
+
+        if (latestDate == null) return emptyList()
+
+        return repositoryData.value.data?.let { it ->
+            it.filter { customerItem -> customerItem.lastCheckInDate == latestDate }
         } ?: emptyList()
     }
 }
