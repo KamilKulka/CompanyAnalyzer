@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">CompanyAnalyzer</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="job">Job</string>
+    <string name="company">Company</string>
+    <string name="city">City</string>
+    <string name="street">Street</string>
+    <string name="type">Type</string>
+    <string name="zip">Zip</string>
+    <string name="phone">Phone</string>
+    <string name="last_check_in_date">Last Check-In Date</string>
+    <string name="earliest_check_in_customer">"Customer/s with the earliest check in date"</string>
 </resources>

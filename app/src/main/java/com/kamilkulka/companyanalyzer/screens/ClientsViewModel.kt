@@ -9,7 +9,7 @@ import com.kamilkulka.companyanalyzer.model.CustomerItem
 import com.kamilkulka.companyanalyzer.repository.CustomerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,12 +27,31 @@ class ClientsViewModel @Inject constructor(
     private fun getDataFromRepository() {
         viewModelScope.launch {
             repositoryData.value.loading = true
-            Timber.d("Getting data from repository...")
             repositoryData.value = repository.getAllCustomers()
 
             if (repositoryData.value.data.toString().isNotEmpty()) repositoryData.value.loading =
                 false
 
         }
+    }
+
+    fun getEarliestCustomer():List<CustomerItem>{
+
+        var earliestDate: LocalDate? = null
+        repositoryData.value.data?.let {
+            for (customerItem in it){
+                customerItem.lastCheckInDate?.let { checkInDate ->
+                    if (earliestDate == null || checkInDate<earliestDate){
+                        earliestDate = checkInDate
+                    }
+                }
+            }
+        } ?: return emptyList()
+
+        if (earliestDate == null) return emptyList()
+
+        return repositoryData.value.data?.let { it ->
+            it.filter { customerItem -> customerItem.lastCheckInDate == earliestDate }
+        } ?: emptyList()
     }
 }
