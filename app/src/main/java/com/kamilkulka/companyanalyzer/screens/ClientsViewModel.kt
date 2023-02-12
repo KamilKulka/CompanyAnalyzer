@@ -9,8 +9,11 @@ import com.kamilkulka.companyanalyzer.model.CustomerItem
 import com.kamilkulka.companyanalyzer.repository.CustomerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.Collator
 import java.time.LocalDate
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @HiltViewModel
 class ClientsViewModel @Inject constructor(
@@ -36,7 +39,6 @@ class ClientsViewModel @Inject constructor(
     }
 
     fun getEarliestCustomer(): List<CustomerItem> {
-
         var earliestDate: LocalDate? = null
         repositoryData.value.data?.let {
             for (customerItem in it) {
@@ -56,7 +58,6 @@ class ClientsViewModel @Inject constructor(
     }
 
     fun getLatestCustomer(): List<CustomerItem> {
-
         var latestDate: LocalDate? = null
         repositoryData.value.data?.let {
             for (customerItem in it) {
@@ -73,5 +74,22 @@ class ClientsViewModel @Inject constructor(
         return repositoryData.value.data?.let { it ->
             it.filter { customerItem -> customerItem.lastCheckInDate == latestDate }
         } ?: emptyList()
+    }
+
+    fun getAllFullNamesAlphabetically(): List<String>{
+        repositoryData.value.data?.let { customerItems ->
+            val listOfNames = mutableListOf<String>()
+            for (customerItem in customerItems){
+                if (customerItem.firstName != null && customerItem.lastName != null){
+                    listOfNames.add("${customerItem.firstName} ${customerItem.lastName}")
+                }else if (customerItem.firstName == null && customerItem.lastName != null){
+                    listOfNames.add("${customerItem.lastName}")
+                }else if (customerItem.firstName != null && customerItem.lastName == null){
+                    listOfNames.add("${customerItem.firstName}")
+                }
+            }
+            if (listOfNames.isNotEmpty()) listOfNames.sort()
+            return listOfNames
+        } ?: return emptyList()
     }
 }
