@@ -9,9 +9,7 @@ import com.kamilkulka.companyanalyzer.model.CustomerItem
 import com.kamilkulka.companyanalyzer.repository.CustomerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.text.Collator
 import java.time.LocalDate
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -90,6 +88,17 @@ class ClientsViewModel @Inject constructor(
             }
             if (listOfNames.isNotEmpty()) listOfNames.sort()
             return listOfNames
+        } ?: return emptyList()
+    }
+
+    fun getAllJobsAlphabetically(): List<String>{
+        repositoryData.value.data?.let { customerItems ->
+            val listOfJobs = mutableListOf<String>()
+            for (customerItem in customerItems){
+                customerItem.job?.let { if (!listOfJobs.contains(it)) listOfJobs.add(it) }
+            }
+            if (listOfJobs.isNotEmpty()) listOfJobs.sort()
+            return listOfJobs
         } ?: return emptyList()
     }
 }

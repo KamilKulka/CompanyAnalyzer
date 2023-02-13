@@ -41,7 +41,7 @@ fun ClientsScreen(viewModel: ClientsViewModel = hiltViewModel()) {
                 }
             }
             item {
-                Column() {
+                Column {
                     Text(
                         text = stringResource(id = R.string.latest_check_in_customer),
                         style = MaterialTheme.typography.h5,
@@ -61,6 +61,13 @@ fun ClientsScreen(viewModel: ClientsViewModel = hiltViewModel()) {
                 LazyColumn {
                     items(items = viewModel.getAllFullNamesAlphabetically()) { name ->
                         Text(text = name)
+                    }
+                }
+            }
+            item {
+                LazyColumn {
+                    items(items = viewModel.getAllJobsAlphabetically()) { job ->
+                        Text(text = job)
                     }
                 }
             }
