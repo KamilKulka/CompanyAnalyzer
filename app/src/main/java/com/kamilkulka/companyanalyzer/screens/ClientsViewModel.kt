@@ -74,15 +74,15 @@ class ClientsViewModel @Inject constructor(
         } ?: emptyList()
     }
 
-    fun getAllFullNamesAlphabetically(): List<String>{
+    fun getAllFullNamesAlphabetically(): List<String> {
         repositoryData.value.data?.let { customerItems ->
             val listOfNames = mutableListOf<String>()
-            for (customerItem in customerItems){
-                if (customerItem.firstName != null && customerItem.lastName != null){
+            for (customerItem in customerItems) {
+                if (customerItem.firstName != null && customerItem.lastName != null) {
                     listOfNames.add("${customerItem.firstName} ${customerItem.lastName}")
-                }else if (customerItem.firstName == null && customerItem.lastName != null){
+                } else if (customerItem.firstName == null && customerItem.lastName != null) {
                     listOfNames.add("${customerItem.lastName}")
-                }else if (customerItem.firstName != null && customerItem.lastName == null){
+                } else if (customerItem.firstName != null && customerItem.lastName == null) {
                     listOfNames.add("${customerItem.firstName}")
                 }
             }
@@ -91,14 +91,33 @@ class ClientsViewModel @Inject constructor(
         } ?: return emptyList()
     }
 
-    fun getAllJobsAlphabetically(): List<String>{
+    fun getAllJobsAlphabetically(): List<String> {
         repositoryData.value.data?.let { customerItems ->
             val listOfJobs = mutableListOf<String>()
-            for (customerItem in customerItems){
+            for (customerItem in customerItems) {
                 customerItem.job?.let { if (!listOfJobs.contains(it)) listOfJobs.add(it) }
             }
             if (listOfJobs.isNotEmpty()) listOfJobs.sort()
             return listOfJobs
+        } ?: return emptyList()
+    }
+
+    fun getAllCustomers(): List<CustomerItem> {
+        repositoryData.value.data?.let { customerItems ->
+            val listOfCustomers = mutableListOf<CustomerItem>()
+            for (customerItem in customerItems) {
+                if (customerItem.firstName != null ||
+                    customerItem.lastName != null ||
+                    customerItem.job != null ||
+                    customerItem.company != null ||
+                    customerItem.city != null ||
+                    customerItem.street != null ||
+                    customerItem.type != null ||
+                    customerItem.zip != null ||
+                    customerItem.phone != null ||
+                    customerItem.lastCheckInDate != null) listOfCustomers.add(customerItem)
+            }
+            return listOfCustomers
         } ?: return emptyList()
     }
 }
