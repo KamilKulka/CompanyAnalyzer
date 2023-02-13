@@ -10,6 +10,10 @@
     <string name="zip">Zip</string>
     <string name="phone">Phone</string>
     <string name="last_check_in_date">Last Check-In Date</string>
-    <string name="earliest_check_in_customer">"Customer/s with the earliest check in date"</string>
-    <string name="latest_check_in_customer">"Customer/s with the latest check in date"</string>
+    <string name="earliest_check_in">"Earliest check-in customer"</string>
+    <string name="latest_check_in">"Latest check-in customer"</string>
+    <string name="all_customers">All customers</string>
+    <string name="sorted_names">Sorted names</string>
+    <string name="sorted_jobs">Sorted jobs</string>
+
 </resources>
