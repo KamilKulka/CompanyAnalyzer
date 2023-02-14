@@ -32,8 +32,14 @@ fun CustomerCard(
 ) {
     var extraDataUnfolded by remember { mutableStateOf(false) }
     Card(modifier = modifier, elevation = elevation, shape = shape) {
-        Column(modifier = Modifier.padding(contentPadding).animateContentSize()) {
-            Row(modifier = Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+        Column(modifier = Modifier
+            .padding(contentPadding)
+            .animateContentSize()) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 VerticalValueWithTitle(
                     title = stringResource(id = R.string.first_name),
                     value = customerItem.firstName,

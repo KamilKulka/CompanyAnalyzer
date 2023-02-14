@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kamilkulka.companyanalyzer.component.CustomerCard
+import com.kamilkulka.companyanalyzer.data.DataOrException
 import com.kamilkulka.companyanalyzer.model.Statistics
 import kotlinx.coroutines.launch
 
@@ -26,11 +27,12 @@ fun ClientsScreen(viewModel: ClientsViewModel = hiltViewModel()) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     var statistics by remember { mutableStateOf(Statistics.ALL_CUSTOMERS) }
-
     ModalDrawer(drawerContent = {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        ) {
             OutlinedButton(onClick = { statistics = Statistics.ALL_CUSTOMERS }) {
                 Text(
                     text = stringResource(id = R.string.all_customers),
@@ -89,7 +91,10 @@ fun ClientsScreen(viewModel: ClientsViewModel = hiltViewModel()) {
                 )
             }
             Surface(modifier = Modifier.fillMaxSize()) {
-                LazyColumn(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     when (statistics) {
                         Statistics.ALL_CUSTOMERS -> {
                             items(items = viewModel.getAllCustomers()) { customerItem ->

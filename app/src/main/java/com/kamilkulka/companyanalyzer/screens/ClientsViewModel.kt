@@ -115,7 +115,8 @@ class ClientsViewModel @Inject constructor(
                     customerItem.type != null ||
                     customerItem.zip != null ||
                     customerItem.phone != null ||
-                    customerItem.lastCheckInDate != null) listOfCustomers.add(customerItem)
+                    customerItem.lastCheckInDate != null
+                ) listOfCustomers.add(customerItem)
             }
             return listOfCustomers
         } ?: return emptyList()
